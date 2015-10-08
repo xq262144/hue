@@ -122,12 +122,10 @@ from desktop.views import _ko
     },
     shim: {
       "knockout": { exports: "ko" },
-      "ko.charts": { deps: ["knockout"] },
       "knockout-mapping": { deps: ["knockout"] },
       "knockout-sortable": { deps: ["knockout", "jquery", "jquery.ui.sortable"] },
       "knockout-deferred-updates": { deps: ["knockout"] },
       "ko.editable": { deps: ["knockout"] },
-      "ko.hue-bindings": { deps: ["knockout"] },
       "ace.extended": { deps: ["ace"] },
       "ace.ext-language-tools": { deps: ["ace"] }
     },
@@ -1375,6 +1373,7 @@ from desktop.views import _ko
   require([
     "knockout",
     "notebook/js/notebook.ko",
+    "ko.charts",
     "knockout-mapping",
     "knockout-sortable",
     "knockout-deferred-updates",
