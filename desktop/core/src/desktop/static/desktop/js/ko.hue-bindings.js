@@ -1741,6 +1741,9 @@
 
       editor.selection.on("changeSelection", function () {
         snippet.selectedStatement(editor.getSelectedText());
+        if (editor.getSelectedText() != ""){
+          window.linuxSecondaryClipboard = editor.getSelectedText();
+        }
       });
 
       editor.on("blur", function () {
