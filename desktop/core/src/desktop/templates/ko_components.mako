@@ -205,10 +205,17 @@ from desktop.views import _ko
       </li>
 
       <li class="nav-header" style="margin-top:10px;" data-bind="visible: ! assistHelper.loading() && ! hasErrors()">
-        ${_('tables')} <!-- ko if: selectedDatabase() != null --><span class="badge badge-info" style="font-weight: normal" data-bind="visible: selectedDatabase().hasEntries(), text: selectedDatabase().filteredEntries().length"></span><!-- /ko -->
-        <div class="pull-right" data-bind="visible: selectedDatabase() != null && selectedDatabase().hasEntries(), css: { 'hover-actions': ! filter(), 'blue': filter }">
+        ${_('tables')}
+        <!-- ko if: selectedDatabase() != null -->
+        <div class="pull-right" data-bind="visible: selectedDatabase().hasEntries(), css: { 'hover-actions': ! filter(), 'blue': filter }" style="margin-top: -3px">
+          <span class="muted" style="font-weight: normal">
+            <span data-bind="text: selectedDatabase().filteredEntries().length"></span>
+          of
+          <span data-bind="text: selectedDatabase().entries().length"></span>
+            </span>
           <a href="javascript:void(0)" data-bind="click: toggleSearch"><i class="pointer fa fa-search" title="${_('Search')}"></i></a>
         </div>
+        <!-- /ko -->
       </li>
 
       <!-- ko if: selectedDatabase() != null -->
