@@ -22,13 +22,14 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_GET, require_POST
 
 from desktop.decorators import check_document_access_permission
-from desktop.lib.django_util import JsonResponse
+from desktop.lib.django_util import HttpResponse, JsonResponse
 from desktop.models import Document2, Document
 
 from notebook.connectors.base import get_api, Notebook, QueryExpired
 from notebook.decorators import api_error_handler, check_document_modify_permission
 from notebook.models import escape_rows
 
+import requests
 
 LOG = logging.getLogger(__name__)
 
@@ -277,6 +278,15 @@ def close_statement(request):
   return JsonResponse(response)
 
 
+def github_fetch(request):
+  url = request.GET.get('url', None)
+  if url is None:
+    return JsonResponse({'status': -1})
+  else:
+    r = requests.get(url.replace("github.com", "raw.githubusercontent.com").replace("blob/", ""))
+    return HttpResponse(r.content, content_type="application/json")
+
+
 @require_POST
 @check_document_access_permission()
 @api_error_handler
@@ -296,3 +306,4 @@ def autocomplete(request, database=None, table=None, column=None, nested=None):
   response['status'] = 0
 
   return JsonResponse(response)
+
