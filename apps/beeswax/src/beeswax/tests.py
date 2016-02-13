@@ -1980,6 +1980,7 @@ for x in sys.stdin:
       assert_true('hive.execution.engine' in json_resp['settings'])
       assert_true('mapreduce.job.queuename' in json_resp['settings'])
 
+      grant_access("test", "test", "impala")
       resp = self.client.get(reverse("impala:get_settings"))
       json_resp = json.loads(resp.content)
       assert_equal(0, json_resp['status'])
