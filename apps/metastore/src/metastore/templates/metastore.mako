@@ -715,7 +715,7 @@ ${ assist.assistPanel() }
           }"></div>
       </div>
       <div class="resizer" data-bind="visible: $root.isLeftPanelVisible() && $root.assistAvailable(), splitDraggable : { appName: 'notebook', leftPanelVisible: $root.isLeftPanelVisible }"><div class="resize-bar">&nbsp;</div></div>
-      <div class="right-panel">
+      <div class="right-panel" data-bind="niceScroll">
         <div class="metastore-main">
           <h3>
             <!-- ko template: { if: database() !== null && database().table() !== null, name: 'metastore-describe-table-actions' }--><!-- /ko -->

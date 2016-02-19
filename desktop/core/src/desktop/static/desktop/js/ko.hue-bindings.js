@@ -1349,7 +1349,7 @@
               panelRatios[panelDefinitions()[idx].type] = $(panel).outerHeight(true) / totalHeightForPanels;
             });
             assistHelper.setInTotalStorage('assist', 'innerPanelRatios', panelRatios);
-            $('.ps-container').perfectScrollbar('update');
+            $('.nice-scroll').getNiceScroll().resize();
           }
         });
       });
@@ -3128,33 +3128,12 @@
           'width': '100%'
         }).appendTo($wrapper);
 
-        $container.perfectScrollbar({
-          minScrollbarLength: options.minScrollbarLength || 20,
-          suppressScrollX: options.suppressScrollX || true,
-          scrollYFixedTop: options.scrollYFixedTop ? (typeof options.scrollYFixedTop == 'boolean' ? $container.position().top : options.scrollYFixedTop) : null
+        $container.addClass('nice-scroll').niceScroll({
+          cursorcolor: '#666',
+          cursoropacitymax:  0.7,
+          horizrailenabled: false,
+          autohidemode: 'leave'
         });
-        $container.on('ps-scroll-x', function () {
-          $(element).trigger('scroll');
-        });
-        $container.on('ps-scroll-y', function () {
-          $(element).trigger('scroll');
-        });
-      }
-      else {
-        window.setTimeout(function(){
-          $container.perfectScrollbar('destroy');
-          $container.perfectScrollbar({
-            minScrollbarLength: options.minScrollbarLength || 20,
-            suppressScrollX: options.suppressScrollX || true,
-            scrollYFixedTop: options.scrollYFixedTop ? (typeof options.scrollYFixedTop == 'boolean' ? $container.position().top : options.scrollYFixedTop) : null
-          });
-          $container.on('ps-scroll-x', function () {
-            $(element).trigger('scroll');
-          });
-          $container.on('ps-scroll-y', function () {
-            $(element).trigger('scroll');
-          });
-        }, 200);
       }
 
       // This is kept up to date with the currently rendered elements, it's used to keep track of any
@@ -3176,7 +3155,7 @@
           totalHeight += height;
         });
         $wrapper.height(totalHeight + 'px');
-        $container.perfectScrollbar('update');
+        $container.getNiceScroll().resize();
       };
       resizeWrapper();
 
@@ -3355,9 +3334,6 @@
         $parentFVOwnerElement.data('disposalFunction', null);
       });
 
-      ko.utils.domNodeDisposal.addDisposeCallback($wrapper[0], function () {
-        $container.perfectScrollbar('destroy')
-      });
       ko.utils.domNodeDisposal.addDisposeCallback($wrapper[0], $parentFVOwnerElement.data('disposalFunction'));
 
       setStartAndEndFromScrollTop();
@@ -3505,19 +3481,15 @@
     }
   };
 
-  ko.bindingHandlers.perfectScrollbar = {
+  ko.bindingHandlers.niceScroll = {
     init: function (element, valueAccessor, allBindings) {
       var options = valueAccessor() || {};
       if (typeof options.enable === 'undefined' || options.enable) {
-        $(element).perfectScrollbar({
-          minScrollbarLength: options.minScrollbarLength || 20,
-          suppressScrollX: options.suppressScrollX || true
-        });
-        $(element).on('ps-scroll-x', function () {
-          $(element).trigger('scroll');
-        });
-        $(element).on('ps-scroll-y', function () {
-          $(element).trigger('scroll');
+        $(element).niceScroll({
+          cursorcolor: options.cursorcolor || '#666',
+          cursoropacitymin: options.cursoropacitymin || 0,
+          cursoropacitymax: options.cursoropacitymax || 0.7,
+          horizrailenabled: options.horizrailenabled || false
         });
       }
     }
