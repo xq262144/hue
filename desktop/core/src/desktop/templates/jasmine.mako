@@ -26,7 +26,8 @@
     // Add specs below
     require([
       'desktop/spec/sqlAutocompleterSpec',
-      'desktop/spec/hdfsAutocompleterSpec'
+      'desktop/spec/hdfsAutocompleterSpec',
+      'desktop/spec/autocomplete/sqlSpec'
     ], function() {
       window.onload();
     });
